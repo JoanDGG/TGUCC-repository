@@ -8,6 +8,7 @@ public class ShakeScreen : MonoBehaviour
     // A measure of how quickly the shake effect should evaporate
     public float dampingSpeed = 1.0f;
     public float shakeMagnitude = 0.6f;
+    public float shakeTime = 2.0f;
     
     private float shakeDuration = 0f;
 
@@ -47,6 +48,6 @@ public class ShakeScreen : MonoBehaviour
 
     public void TriggerShake()
     {
-        shakeDuration = 2.0f;
+        shakeDuration = shakeTime;
     }
 }

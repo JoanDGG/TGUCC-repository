@@ -71,6 +71,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: None
+  floatingText: {fileID: 901863860148736784, guid: 8c1386a194741474c8d5eaa34e526273, type: 3}
+  in_zone: 0
 --- !u!1 &6961045747319081989
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,6 +85,7 @@ GameObject:
   - component: {fileID: 6259345789635503240}
   - component: {fileID: 5977963844064572221}
   - component: {fileID: 2018323866653764375}
+  - component: {fileID: 1517620673111478398}
   m_Layer: 0
   m_Name: SideFlamethrowerLeft
   m_TagString: Untagged
@@ -97,7 +100,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6961045747319081989}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8, y: -9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -202,6 +205,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1517620673111478398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6961045747319081989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c515290ca494c142892d7981a53a4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5411907442865133186
 PrefabInstance:
   m_ObjectHideFlags: 0

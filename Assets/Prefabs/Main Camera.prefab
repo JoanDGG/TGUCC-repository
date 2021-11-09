@@ -103,8 +103,8 @@ MonoBehaviour:
   xSmooth: 2
   ySmooth: 2
   yOffset: 1
-  maxYandX: {x: 23, y: 10}
-  minYandX: {x: -20, y: -24}
+  xLimits: {x: -21, y: 23}
+  yLimits: {x: -20, y: 9}
   target: {fileID: 0}
 --- !u!114 &1572930643
 MonoBehaviour:
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dampingSpeed: 1
   shakeMagnitude: 0.3
+  shakeTime: 2
 --- !u!114 &1572930644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,3 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46998b88cb23b794b960b651f2bc1812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffsetLimits: {x: 0.4, y: 1}
+  xMarginLimits: {x: 0.5, y: 2}
+  FOVLimits: {x: 10, y: 35}

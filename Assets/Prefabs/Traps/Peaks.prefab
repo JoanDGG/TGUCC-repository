@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5120182497595287627}
   - component: {fileID: 8017848980743600884}
   - component: {fileID: 6059633475515943666}
+  - component: {fileID: 4781607729239396101}
   m_Layer: 0
   m_Name: Peaks
   m_TagString: Untagged
@@ -130,6 +131,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
+--- !u!114 &4781607729239396101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589594161729083167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c515290ca494c142892d7981a53a4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3546984012807544363
 PrefabInstance:
   m_ObjectHideFlags: 0

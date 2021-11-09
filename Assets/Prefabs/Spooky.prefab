@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6760456969576054840}
   - component: {fileID: 6760456969576054847}
   - component: {fileID: 6760456969576054846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spooky
   m_TagString: Player
   m_Icon: {fileID: 0}

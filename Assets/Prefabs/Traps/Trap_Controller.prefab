@@ -71,3 +71,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: None
+  floatingText: {fileID: 901863860148736784, guid: 8c1386a194741474c8d5eaa34e526273, type: 3}

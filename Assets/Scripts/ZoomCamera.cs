@@ -24,14 +24,22 @@ public class ZoomCamera : MonoBehaviour
     private float xMarginSlope;
     private float xMarginYIntercept;
 
+    private Vector2 xLimitsStart;
+    private Vector2 yLimitsStart;
+
+    private SmoothFollow smoothFollow;
+
     // Start is called before the first frame update
     void Start()
     {
         mycamera = gameObject.GetComponent<Camera>();
+        smoothFollow = gameObject.GetComponent<SmoothFollow>();
         SetZoomLimitValues(yOffsetLimits.x,
                            yOffsetLimits.y, 
                            xMarginLimits.x, 
                            xMarginLimits.y);
+        xLimitsStart = smoothFollow.xLimits;
+        yLimitsStart = smoothFollow.yLimits;
     }
 
     // Update is called once per frame
@@ -42,6 +50,10 @@ public class ZoomCamera : MonoBehaviour
             if (mycamera.fieldOfView > FOVLimits.x)
             {
                 mycamera.fieldOfView--;
+                smoothFollow.xLimits.x--;
+                smoothFollow.xLimits.y++;
+                smoothFollow.yLimits.x--;
+                smoothFollow.yLimits.y++;
             }
         }
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
@@ -49,6 +61,13 @@ public class ZoomCamera : MonoBehaviour
             if (mycamera.fieldOfView < FOVLimits.y)
             {
                 mycamera.fieldOfView++;
+                if(smoothFollow.xLimits.x < xLimitsStart.x)
+                {
+                    smoothFollow.xLimits.x++;
+                    smoothFollow.xLimits.y--;
+                    smoothFollow.yLimits.x++;
+                    smoothFollow.yLimits.y--;
+                }
             }
         }
     }
@@ -61,11 +80,11 @@ public class ZoomCamera : MonoBehaviour
     private void SetZoomValues()
     {
         // Needs SmoothFollow script
-        gameObject.GetComponent<SmoothFollow>().yOffset =
-                yOffsetSlope * mycamera.fieldOfView - yOffsetYIntercept;
+        smoothFollow.yOffset = (
+            yOffsetSlope * mycamera.fieldOfView - yOffsetYIntercept);
 
-        gameObject.GetComponent<SmoothFollow>().xMargin =
-            xMarginSlope * mycamera.fieldOfView - xMarginYIntercept;
+        smoothFollow.xMargin = (
+            xMarginSlope * mycamera.fieldOfView - xMarginYIntercept);
     }
 
     public void SetZoomLimitValues(float minYOffset,
@@ -75,7 +94,6 @@ public class ZoomCamera : MonoBehaviour
     {
         yOffsetSlope = ((maxYOffset - minYOffset) / (FOVLimits.y - FOVLimits.x));
         yOffsetYIntercept = (minYOffset - (yOffsetSlope * FOVLimits.x));
-        print(yOffsetSlope + ", " + yOffsetYIntercept);
 
         xMarginSlope = ((maxXMargin - minXMargin) / (FOVLimits.y - FOVLimits.x));
         xMarginYIntercept = (minXMargin - (xMarginSlope * FOVLimits.x));
