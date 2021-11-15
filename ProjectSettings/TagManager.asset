@@ -8,6 +8,12 @@ TagManager:
   - Item
   - Container
   - PathPoint
+  - HideSpot
+  - Trap
+  - Bullet
+  - Camera
+  - Spooky
+  - Kid
   layers:
   - Default
   - TransparentFX
@@ -17,7 +23,7 @@ TagManager:
   - UI
   - Platforms
   - Obstacle
-  - 
+  - UIComplement
   - 
   - 
   - 

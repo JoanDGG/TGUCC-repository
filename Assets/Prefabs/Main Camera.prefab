@@ -44,7 +44,7 @@ Camera:
   m_GameObject: {fileID: 4129640315628632191}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 3
   m_BackGroundColor: {r: 0.12941177, g: 0.078431375, b: 0.09411766, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -54,7 +54,7 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: -0.51
     y: 0
     width: 1
     height: 1
@@ -66,7 +66,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   yOffset: 1
   xLimits: {x: -21, y: 23}
   yLimits: {x: -20, y: 9}
-  target: {fileID: 0}
+  target: {fileID: 6760456969576054845, guid: ebf51dca2c95fc247bfbf41de34e0716, type: 3}
 --- !u!114 &1572930643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +121,8 @@ MonoBehaviour:
   dampingSpeed: 1
   shakeMagnitude: 0.3
   shakeTime: 2
+  spooky: {fileID: 6760456969576054845, guid: ebf51dca2c95fc247bfbf41de34e0716, type: 3}
+  kid: {fileID: 5662280589544817372, guid: 9dbddeff2fe2adc4c9b8011ec55c182d, type: 3}
 --- !u!114 &1572930644
 MonoBehaviour:
   m_ObjectHideFlags: 0

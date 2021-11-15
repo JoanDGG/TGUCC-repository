@@ -19,53 +19,58 @@ public class TrapController : MonoBehaviour
         trap = gameObjectParent.name;
     }
 
-    void Update()
+    public void AccessControl()
+    {
+        if(in_zone)
+        {
+            if (newText == null)
+                CreateText();
+            owner = player;
+            newText.GetComponent<TextMesh>().text = "Control granted!";
+            newText.GetComponent<FadeOut>().FadeInText();
+        }
+    }
+
+    public void Trigger()
+    {
+        if(in_zone)
+        {
+            if (newText == null)
+                CreateText();
+            owner = player;
+            gameObjectParent.GetComponent<Animator>().SetTrigger("Activate");
+            newText.GetComponent<TextMesh>().text = showText + " triggered!";
+            newText.GetComponent<FadeOut>().FadeInText();
+            //print(trap + " on!");
+        }
+
+    }
+
+    public void ShowOwner()
     {
         if (in_zone)
         {
-            if (Input.GetKeyDown("z"))
-            {
-                owner = player;
-                newText.GetComponent<TextMesh>().text = "Control granted!";
-                newText.GetComponent<FadeOut>().FadeInText();
-            }
-            else if (Input.GetKeyDown("x"))
-            {
-                owner = player;
-                newText.GetComponent<TextMesh>().text = showText + " triggered!";
-                newText.GetComponent<FadeOut>().FadeInText();
-                Trigger();
-            }
-            else if (Input.GetKeyDown("c"))
-            {
-                newText.GetComponent<TextMesh>().text = "Current owner: " + owner;
-                newText.GetComponent<FadeOut>().FadeInText();
-            }
+            if (newText == null)
+                CreateText();
+            newText.GetComponent<TextMesh>().text = "Current owner: " + owner;
+            newText.GetComponent<FadeOut>().FadeInText();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Kid") || other.CompareTag("Spooky"))
         {
             in_zone = true;
-            player = other.gameObject.name;
+            player = other.gameObject.tag;
             //print(trap + ": Z to access control");
             //print(trap + ": X to trigger trap");
             //print(trap + ": C to view owner");
 
-            //Instantiate Text
-            Vector3 position = new Vector3(
-                                   gameObjectParent.transform.position.x,
-                                   gameObjectParent.transform.position.y + 0.75f,
-                                   gameObjectParent.transform.position.z);
-            newText = Instantiate(floatingText, position, Quaternion.identity);
-            Renderer textRenderer = newText.GetComponent<Renderer>();
-            textRenderer.sortingOrder = 6;
-
+            CreateText();
             newText.GetComponent<FadeOut>().FadeInText();
 
-            switch(trap)
+            switch (trap)
             {
                 case "Arrows":
                     newText.GetComponent<TextMesh>().text = "Arrows trap";
@@ -84,7 +89,7 @@ public class TrapController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Kid") || other.CompareTag("Spooky"))
         {
             in_zone = false;
             if(newText != null)
@@ -95,9 +100,15 @@ public class TrapController : MonoBehaviour
         }
     }
 
-    public void Trigger()
+    private void CreateText()
     {
-        gameObjectParent.GetComponent<Animator>().SetTrigger("Activate");
-        //print(trap + " on!");
+        //Instantiate Text
+        Vector3 position = new Vector3(
+                               gameObjectParent.transform.position.x,
+                               gameObjectParent.transform.position.y + 0.75f,
+                               gameObjectParent.transform.position.z);
+        newText = Instantiate(floatingText, position, Quaternion.identity);
+        Renderer textRenderer = newText.GetComponent<Renderer>();
+        textRenderer.sortingOrder = 6;
     }
 }

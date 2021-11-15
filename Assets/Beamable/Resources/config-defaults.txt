@@ -1,0 +1,8 @@
+{
+    "cid": "1418422019508334",
+    "alias": "devverso",
+    "pid": "DE_1418422019508335",
+    "platform": "https://api.beamable.com",
+    "socket": "https://api.beamable.com",
+    "containerPrefix": ""
+}

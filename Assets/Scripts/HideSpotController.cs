@@ -14,23 +14,33 @@ public class HideSpotController : MonoBehaviour
     private bool in_zone = false;
     private bool active = true;
 
-    void Update()
+    public void Search()
     {
-        if (Input.GetKeyDown("z") && in_zone)
+        if(in_zone)
         {
-            if(GameManager.gameMode == 3)
+            if (GameManager.gameMode == 3)
             {
                 // Search for Super Secret Bag of Candies
                 StartCoroutine(WaitForSearching());
                 if (hasSuperSecretBag)
                 {
-                    GameManager.whoFoundSuperSecretBag = playerName;
-                    newText.GetComponent<TextMesh>().text = "You found the " + 
+                    GameObject.Find(playerName + "UI").GetComponent<Rigidbody2D>().
+                        AddForce(Vector3.up * 8.5f, ForceMode2D.Impulse);
+                    GameManager.HideSuperSecretBagOfCandies();
+
+                    if (newText == null)
+                        CreateText();
+                    newText.GetComponent<TextMesh>().text = "You found the " +
                         "\nSuper Secret Bag of Candies!!!";
                     newText.GetComponent<FadeOut>().FadeInText();
+
+                    GameObject.FindWithTag(playerName).GetComponent<PlayerMovement>().
+                        Candies(gameObject.transform.position, 1);
                 }
                 else
                 {
+                    if (newText == null)
+                        CreateText();
                     newText.GetComponent<TextMesh>().text = "Nothing found...";
                     newText.GetComponent<FadeOut>().FadeInText();
                     StartCoroutine(WaitToFadeOut());
@@ -42,29 +52,16 @@ public class HideSpotController : MonoBehaviour
                 int number = Random.Range(1, 10);
                 if (number >= 4)
                 {
-                    int candies = Random.Range(1, 6);
+                    GameObject.Find(playerName + "UI").GetComponent<Rigidbody2D>().
+                        AddForce(Vector3.up * 8.5f, ForceMode2D.Impulse);
+                    
+                    GameObject.FindWithTag(playerName).GetComponent<PlayerMovement>().
+                        Candies(gameObject.transform.position);
+                    int candies = GameObject.FindWithTag(playerName).
+                        GetComponent<PlayerMovement>().numCandies;
                     newText.GetComponent<TextMesh>().text =
                         "Found " + candies + " candies!!";
                     newText.GetComponent<FadeOut>().FadeInText();
-                    StartCoroutine(ShowCandies((candies > 3 ? 3 : candies)));
-
-                    if (playerName == "Spooky")
-                    {
-                        GameManager.spookyCandies += candies;
-                        print(GameManager.spookyCandies);
-
-                        GameObject.Find(playerName + "Score").
-                            GetComponent<Text>().text = GameManager.spookyCandies.ToString();
-                    }
-                    else
-                    {
-                        GameManager.kidCandies += candies;
-                        print(GameManager.kidCandies);
-
-                        GameObject.Find(playerName + "Score").
-                            GetComponent<Text>().text = GameManager.kidCandies.ToString();
-                    }
-
 
                     active = false;
                     StartCoroutine(WaitToFadeOut());
@@ -81,22 +78,17 @@ public class HideSpotController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Kid") || other.CompareTag("Spooky"))
         {
             if(active)
             {
-                //Instantiate Text
-                Vector3 position = new Vector3(
-                                           gameObject.transform.position.x,
-                                           gameObject.transform.position.y + 0.75f,
-                                           gameObject.transform.position.z);
-                newText = Instantiate(floatingText, position, Quaternion.identity);
-                Renderer textRenderer = newText.GetComponent<Renderer>();
-                textRenderer.sortingOrder = 6;
+                CreateText();
 
-                newText.GetComponent<TextMesh>().text = "Press Z to search...";
+                newText.GetComponent<TextMesh>().text = "Press " + 
+                    other.gameObject.GetComponent<PlayerMovement>().InteractKey.ToString() +
+                    " to search...";
                 newText.GetComponent<FadeOut>().FadeInText();
-                playerName = other.gameObject.name;
+                playerName = other.gameObject.tag;
                 in_zone = true;
             }
         }
@@ -104,7 +96,7 @@ public class HideSpotController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Kid") || other.CompareTag("Spooky"))
         {
             in_zone = false;
             if (newText != null)
@@ -113,6 +105,18 @@ public class HideSpotController : MonoBehaviour
                 newText.GetComponent<FadeOut>().FadeOutText();
             }
         }
+    }
+
+    private void CreateText()
+    {
+        //Instantiate Text
+        Vector3 position = new Vector3(
+                               gameObject.transform.position.x,
+                               gameObject.transform.position.y + 0.75f,
+                               gameObject.transform.position.z);
+        newText = Instantiate(floatingText, position, Quaternion.identity);
+        Renderer textRenderer = newText.GetComponent<Renderer>();
+        textRenderer.sortingOrder = 6;
     }
 
     private IEnumerator WaitToFadeOut()
@@ -126,7 +130,7 @@ public class HideSpotController : MonoBehaviour
             image.color = new Color(image.color.r,
                                     image.color.g,
                                     image.color.b, 0f);
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(12);
             active = true;
             gameObject.GetComponent<Collider2D>().enabled = true;
             image.color = new Color(image.color.r,
@@ -140,24 +144,5 @@ public class HideSpotController : MonoBehaviour
         newText.GetComponent<TextMesh>().text = "Searching...";
         newText.GetComponent<FadeOut>().FadeInText();
         yield return new WaitForSeconds(1);
-    }
-
-    private IEnumerator ShowCandies(int candies)
-    {
-        for (int i = 0; i < candies; i++)
-        {
-            if (GameManager.candies[i] != null)
-            {
-                Vector3 position = new Vector3(
-                                   gameObject.transform.position.x,
-                                   gameObject.transform.position.y + 0.75f,
-                                   gameObject.transform.position.z);
-                GameObject candyObject = Instantiate(GameManager.candies[i],
-                    position, Quaternion.identity);
-                Renderer textRenderer = candyObject.GetComponent<Renderer>();
-                textRenderer.sortingOrder = 6;
-                yield return new WaitForSeconds(0.12f);
-            }
-        }
     }
 }

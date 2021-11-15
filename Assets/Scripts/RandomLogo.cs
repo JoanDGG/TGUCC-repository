@@ -4,32 +4,20 @@ using UnityEngine;
 
 public class RandomLogo : MonoBehaviour
 {
-    public float force = 25.0f;
+    public float force = 5.0f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        GetComponent<Rigidbody2D>().AddForce(Vector3.up * force, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position.y < GameObject.Find("Main Camera").
+        if (gameObject.transform.position.y < GameObject.Find("Camera1").
             GetComponent<SmoothFollow>().yLimits.x)
         {
             Destroy(gameObject);
         }
-    }
-
-    public void Aparecer()
-    {
-        //transform.position = Random.insideUnitCircle * 10;
-
-        Vector3 direction = new Vector3(gameObject.transform.position.x 
-            - GameObject.Find("Main Camera").
-            transform.position.x, 1f, 0f);
-        print(direction);
-
-        GetComponent<Rigidbody2D>().AddForce(direction * force, ForceMode2D.Impulse);
     }
 }

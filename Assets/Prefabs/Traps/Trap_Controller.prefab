@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6729918933443013076}
   m_Layer: 0
   m_Name: Trap_Controller
-  m_TagString: Untagged
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,3 +72,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: None
   floatingText: {fileID: 901863860148736784, guid: 8c1386a194741474c8d5eaa34e526273, type: 3}
+  in_zone: 0

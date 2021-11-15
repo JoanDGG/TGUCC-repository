@@ -16,7 +16,7 @@ public class NpcAI : MonoBehaviour
     private Path path;
     private int currentWayPoint = 0;
     private int currentTarget = 0;
-    private bool reachedEndOfPath = false;
+    //private bool reachedEndOfPath = false;
     private bool stuck = true;
     private bool scared = false;
 
@@ -31,7 +31,7 @@ public class NpcAI : MonoBehaviour
         ridigbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        InvokeRepeating("UpdatePath", 1f, 0.5f);
+        InvokeRepeating("UpdatePath", 3f, 0.5f);
     }
 
     void UpdatePath()
@@ -68,13 +68,13 @@ public class NpcAI : MonoBehaviour
 
         if(currentWayPoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath = true;
+            //reachedEndOfPath = true;
             return;
         }
-        else
-        {
-            reachedEndOfPath = false;
-        }
+        //else
+        //{
+        //    reachedEndOfPath = false;
+        //}
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] 
                             - ridigbody2D.position).normalized;
@@ -175,12 +175,9 @@ public class NpcAI : MonoBehaviour
 
     IEnumerator WaitRoutine()
     {
-        print("Empieza...");
         yield return new WaitForSeconds(3);
-        print("Termina");
         if (stuck)
         {
-            print("Si");
             Vector3 position = new Vector3(
                                    gameObject.transform.position.x,
                                    gameObject.transform.position.y + 0.75f,
